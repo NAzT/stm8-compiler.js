@@ -18,12 +18,8 @@ usage('Usage: $0 <cmd> [options]') // usage string of application.
   let Compiler;
 
   context = JSON.parse(fs.readFileSync(context).toString());
-
   context.process_dir = context.kidbright_path;
-  context.toolchain_dir = `${context.process_dir}/xtensa-esp32-elf/bin`;
-  context.esptool = `${context.process_dir}/esptool`;
-  context.compiler.plugins_sources.push(`${context.user_app_dir}/${context.board_name}/user_app.cpp`);
-
+  context.toolchain_dir = `/usr/local/bin`;
   Compiler = createCompiler(context);
 
   Compiler.compile(context.compiler).then(() => {
