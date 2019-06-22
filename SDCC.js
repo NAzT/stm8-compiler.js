@@ -20,22 +20,17 @@ const setConfig = (AppContext) => {
   G.board_name = AppContext.board_name;
   G.toolchain_dir = AppContext.toolchain_dir;
   G.COMPILER_GCC = `${G.toolchain_dir}/sdcc`;
-  G.user_app_dir = app_dir;
-  G.ELF_FILE = `${app_dir}/${G.board_name}.elf`;
-  G.BIN_FILE = `${app_dir}/${G.board_name}.bin`;
-  G.ARCHIVE_FILE = `${G.user_app_dir}/libmain.a`;
+  //G.ARCHIVE_FILE = `${G.user_app_dir}/libmain.a`;
   G.PROCESS_DIR = AppContext.process_dir || `${__dirname}/../..`;
   G.ospath = ospath;
   console.log(`process_dir=${G.process_dir}`);
 };
 const getName = (file) => path.basename(file).split('.')[0];
-let compileFiles = async function(
-    {plugins_sources, cflags, plugins_includes_switch}, cb) {
-  const cppOptions = ['-DHAVE_CONFIG_H'].join(' ');
-  plugins_sources.forEach(async (file, idx, arr) => {
+let compileFiles = async function({sources, cflags}, cb) {
+  sources.forEach(async (file, idx, arr) => {
     let filename = getName(file);
     let fn_obj = `${G.user_app_dir}/${filename}.o`;
-    let cmd = `"${G.COMPILER_CPP}" ${cppOptions} ${cflags} ${plugins_includes_switch} -c "${file}" -o "${fn_obj}"`;
+    let cmd = `"${G.COMPILER_GCC}" ${cflags} -c "${file}" -o "${fn_obj}"`;
     try {
       const {stdout, stderr} = await execPromise(G.ospath(cmd),
           {cwd: G.process_dir});

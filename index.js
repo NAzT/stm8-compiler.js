@@ -6,7 +6,7 @@ const pkg = require('./package');
 
 var argv = require('yargs').
 usage('Usage: $0 <cmd> [options]') // usage string of application.
-.command('compile', 'compile kidbright program.', yarg => {
+.command('compile', 'compile stm8 program.', yarg => {
   // console.log(`call command compile`)
 }, argv => {
   if (!argv.context) {
@@ -18,7 +18,7 @@ usage('Usage: $0 <cmd> [options]') // usage string of application.
   let Compiler;
 
   context = JSON.parse(fs.readFileSync(context).toString());
-  context.process_dir = context.kidbright_path;
+  context.process_dir = `/Users/nat/Downloads/stm8-master/examples/leddance`;
   context.toolchain_dir = `/usr/local/bin`;
   Compiler = createCompiler(context);
 
@@ -47,12 +47,6 @@ command('flash', 'flash device using esptool.', yargs => {
     console.log(`no port specify.`);
     return;
   } else {
-    if (fs.existsSync(argv.port)) {
-      const Xtensa = require('./Xtensa');
-      Xtensa.flash({portname: argv.port, G: context, stdio: 'inherit'});
-    } else {
-      console.log(`port isn't exists.`);
-    }
   }
 }).
 command('generate', 'generate a dummy context configuration.', yargs => {

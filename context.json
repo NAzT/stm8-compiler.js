@@ -5,6 +5,7 @@
   "board_name": "80-7d-3a-a5-8c-0c",
   "compiler": {
     "cflags": "-Isdk/include -mstm8",
-    "ldflags": "-Isdk/include -lstm8"
+    "ldflags": "-Isdk/include -lstm8",
+    "sources": []
   }
 }
