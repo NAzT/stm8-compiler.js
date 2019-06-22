@@ -1,1 +1,5 @@
 node_modules
+build
+sdk/examples/blink/bin
+sdk/examples/inputpooling/bin
+sdk/examples/leddance/bin

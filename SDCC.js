@@ -12,7 +12,6 @@ const ospath = function(p) {
 };
 
 const setConfig = (AppContext) => {
-  const app_dir = `${AppContext.process_dir}/${AppContext.user_app_dir}/${AppContext.board_name}`;
   G = Object.assign({}, AppContext);
   G.compiler = AppContext.compiler;
   G.Log = require('./log');
@@ -26,14 +25,16 @@ const setConfig = (AppContext) => {
   console.log(`process_dir=${G.process_dir}`);
 };
 const getName = (file) => path.basename(file).split('.')[0];
-let compileFiles = async function({sources, cflags}, cb) {
+let compileFiles = async function({sources, cflags, ldflags}, cb) {
+  console.log(`args=`, arguments);
   sources.forEach(async (file, idx, arr) => {
     let filename = getName(file);
     let fn_obj = `${G.user_app_dir}/${filename}.o`;
-    let cmd = `"${G.COMPILER_GCC}" ${cflags} -c "${file}" -o "${fn_obj}"`;
+    let cmd = `"${G.COMPILER_GCC}" ${cflags} ${ldflags} -c "${file}" -o "${fn_obj}"`;
     try {
       const {stdout, stderr} = await execPromise(G.ospath(cmd),
           {cwd: G.process_dir});
+      console.log(G.process_dir);
       if (!stderr) {
         console.log(`compiling... ${path.basename(file)} ok.`);
         // console.log(`${stdout}`);
@@ -42,6 +43,7 @@ let compileFiles = async function({sources, cflags}, cb) {
         // console.log(`${stderr}`);
       }
     } catch (e) {
+      console.error(e);
       console.log(`compiling... ${file} failed.`);
       cb && cb(e);
     }
@@ -52,9 +54,12 @@ let compileFiles = async function({sources, cflags}, cb) {
 };
 
 async function createBin() {
+  //sdcc -I../../include -mstm8 -lstm8 leddance.c bin/clock.rel bin/dance.rel bin/gpio.rel -obin/
+
   console.log(`creating bin image... ${G.BIN_FILE}`);
-  let cmd = `"${G.esptool}" --chip esp32 elf2image --flash_mode "dio" --flash_freq "40m" --flash_size "4MB" -o "${G.BIN_FILE}" "${G.ELF_FILE}"`;
-  return execPromise(G.ospath(cmd), {cwd: G.process_dir});
+  //let cmd = `"${G.esptool}" --chip esp32 elf2image --flash_mode "dio" --flash_freq "40m" --flash_size "4MB" -o "${G.BIN_FILE}" "${G.ELF_FILE}"`;
+  //return execPromise(G.ospath(cmd), {cwd: G.process_dir});
+  return true;
 }
 
 async function linkObject({ldflags}) {
@@ -92,7 +97,7 @@ module.exports = {
   createBin,
   linkObject,
   archiveProgram,
-  compileProgram: util.promisify(compileFiles),
+  compileFiles: util.promisify(compileFiles),
   flash,
   setConfig,
 };

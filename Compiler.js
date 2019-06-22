@@ -6,7 +6,7 @@ const createCompiler = (AppContext) => {
     this.compile = ({cflags, sources, ldflags}) => {
       let promise = new Promise((resolve, reject) => {
         SDCC.setConfig(AppContext);
-        SDCC.compileProgram({sources, cflags}).
+        SDCC.compileFiles({sources, cflags, ldflags}).
         then(() => SDCC.createBin()).
         then(() => {
           resolve();

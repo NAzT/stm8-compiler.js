@@ -18,10 +18,11 @@ usage('Usage: $0 <cmd> [options]') // usage string of application.
   let Compiler;
 
   context = JSON.parse(fs.readFileSync(context).toString());
-  context.process_dir = `/Users/nat/Downloads/stm8-master/examples/leddance`;
+  context.process_dir = `/Users/nat/projects/nodejs/stm8-compiler.js`;
   context.toolchain_dir = `/usr/local/bin`;
   Compiler = createCompiler(context);
 
+  console.log(`start compile.`);
   Compiler.compile(context.compiler).then(() => {
     console.log('compile all files done');
   }).catch(err => {
