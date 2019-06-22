@@ -1,17 +1,17 @@
 {
-  "name": "kidbright-compiler",
+  "name": "stm8-compiler.js",
   "version": "1.1.3",
-  "description": "Kidbright compiler-cli",
+  "description": "stm8-compiler.js cli",
   "main": "index.js",
   "bin": {
-    "kidbright-compiler": "./index.js"
+    "stm8-compiler.js": "./index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nat Weerawan",
   "license": "MIT",
-  "repository": "https://github.com/NAzT/kidbright-compiler",
+  "repository": "https://github.com/NAzT/stm8-compiler.js",
   "dependencies": {
     "moment": "^2.23.0",
     "yargs": "^12.0.5"
