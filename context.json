@@ -1,12 +1,19 @@
 {
-  "kidbright_path": "/Users/nat/kidbright/KidBrightDev",
-  "user_app_dir": "build",
-  "board_name": "80-7d-3a-a5-8c-0c",
+  "flasher": {
+    "tools": "/usr/local/bin/stm8flash",
+    "params": [
+      "-cstlinkv2"
+    ]
+  },
   "compiler": {
     "cflags": "-Isdk/include -mstm8",
     "ldflags": "-lstm8",
+    "libs": [
+      "/Users/nat/projects/nodejs/stm8-compiler.js/sdk/src/gpio.c",
+      "/Users/nat/projects/nodejs/stm8-compiler.js/sdk/src/clock.c"
+    ],
     "sources": [
-      "/Users/nat/Downloads/stm8-master/examples/blink/blink.c"
+      "/Users/nat/projects/nodejs/stm8-compiler.js/sdk/examples/blink/blink.c"
     ]
   }
 }

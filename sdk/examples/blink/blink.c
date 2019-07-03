@@ -26,11 +26,11 @@ int main() {
 	//main loop
 	while(1) {
 		GPIO_Toggle_Pin(GPIO_PORT_B, GPIO_PIN_5);
-		CLK_Delay_ms(100);
+		CLK_Delay_ms(500);
 		GPIO_Toggle_Pin(GPIO_PORT_B, GPIO_PIN_5);
 		CLK_Delay_ms(500);
 		GPIO_Toggle_Pin(GPIO_PORT_B, GPIO_PIN_5);
-		CLK_Delay_ms(250);
+		CLK_Delay_ms(500);
 
 	}
 }

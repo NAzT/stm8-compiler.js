@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-const {createCompiler} = require('./Compiler');
-const pkg = require('./package');
+const fs = require("fs");
+const path = require("path");
+const {createCompiler} = require("./Compiler");
+const pkg = require("./package");
 
-var argv = require('yargs').
-usage('Usage: $0 <cmd> [options]') // usage string of application.
-.command('compile', 'compile stm8 program.', yarg => {
+var argv = require("yargs").
+usage("Usage: $0 <cmd> [options]") // usage string of application.
+.command("compile", "compile stm8 program.", yarg => {
   // console.log(`call command compile`)
 }, argv => {
   if (!argv.context) {
@@ -23,34 +23,27 @@ usage('Usage: $0 <cmd> [options]') // usage string of application.
   Compiler = createCompiler(context);
 
   console.log(`start compile.`);
-  Compiler.compile(context.compiler).then(() => {
-    console.log('compile all files done');
+  Compiler.compile(context).then(() => {
+    console.log("compile all files done");
   }).catch(err => {
-    console.error('project failed.');
+    console.error("project failed.");
   });
 }).
-help('help').
-version('version', pkg.version, `version ${pkg.version}`) // the version string.
-.alias('version', 'v').
-alias('help', 'h').
-alias('context', 'c').
-showHelpOnFail(true, 'whoops, something went wrong! run with --help').
-command('flash', 'flash device using esptool.', yargs => {
+help("help").
+version("version", pkg.version, `version ${pkg.version}`).alias("version", "v").
+alias("help", "h").
+alias("context", "c").
+showHelpOnFail(true, "whoops, something went wrong! run with --help").
+command("flash", "flash device using esptool.", yargs => {
   // pass
 }, argv => {
   let context = path.resolve(argv.context);
   context = JSON.parse(fs.readFileSync(context).toString());
-  context.process_dir = context.kidbright_path;
-  context.toolchain_dir = `${context.process_dir}/xtensa-esp32-elf/bin`;
-  context.esptool = `${context.process_dir}/esptool`;
+  let {tools} = context.flasher;
+  console.log(tools);
 
-  if (!argv.port) {
-    console.log(`no port specify.`);
-    return;
-  } else {
-  }
 }).
-command('generate', 'generate a dummy context configuration.', yargs => {
+command("generate", "generate a dummy context configuration.", yargs => {
   // pass
 }, argv => {
   const dummy = fs.readFileSync(`${__dirname}/context.json`).toString();
