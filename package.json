@@ -13,7 +13,7 @@
   "license": "MIT",
   "repository": "https://github.com/NAzT/stm8-compiler.js",
   "dependencies": {
-    "moment": "^2.23.0",
+    "moment": "^2.29.4",
     "yargs": "^12.0.5"
   }
 }
